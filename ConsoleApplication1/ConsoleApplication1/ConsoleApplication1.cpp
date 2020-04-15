@@ -2,9 +2,23 @@
 //
 
 #include <iostream>
-
+#include "voisk.h"
+#include <thread>
+using namespace std;
+void comand(Voisk& voi, bool por)
+{
+    voi.print();
+    voi.sort(por);
+    voi.print();
+}
 int main()
 {
+    Voisk test(6);
+    thread t1(comand, ref(test), true);
+    thread t2(comand, ref(test), false);
+    t1.join();
+    t2.join();
+    test.print();
     std::cout << "Hello World!\n";
 }
 
