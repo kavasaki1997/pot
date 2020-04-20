@@ -11,11 +11,27 @@ void comand(Voisk& voi, bool por)
     voi.sort(por);
     voi.print();
 }
+void war(Voisk& voi1, Voisk& voi2)
+{
+    if (&voi1 > &voi2)
+    {
+        voi1.getLock();
+        voi2.getLock();
+    }
+    else
+    {
+        voi2.getLock();
+        voi1.getLock();
+    }
+    
+    voi1.fight(voi2);
+}
 int main()
 {
-    Voisk test(6);
-    thread t1(comand, ref(test), true);
-    thread t2(comand, ref(test), false);
+    Voisk test(6,7);
+    Voisk test1(6, 7);
+    thread t1(war, ref(test), ref(test1));
+    thread t2(war, ref(test1), ref(test));
     t1.join();
     t2.join();
     test.print();
